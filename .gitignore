@@ -1,0 +1,31 @@
+# Виртуальное окружение
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Данные (генерируются, не храним в git)
+data/
+Lab*/data/
+*.txt
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Тесты
+.pytest_cache/
