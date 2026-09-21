@@ -14,7 +14,7 @@
 
 Запуск (N — ваш номер варианта):
 
-    python lab01-complexity-starter.py --variant N
+    python lab01-complexity-starter.py --variant 13
 
 Если заготовка скопирована в личный репозиторий и каталог с данными не находится
 автоматически, укажите его явно:
@@ -79,19 +79,30 @@ def array_max(a: list[int]) -> int:
 
 
 def count_equal_pairs(a: list[int]) -> int:
-    """Число пар (i, j), i < j, таких что a[i] == a[j]. Ожидаемая сложность: TODO."""
+    """Число пар (i, j), i < j, таких что a[i] == a[j].  Ожидаемая сложность: O(n²) - вложенный цикл, ~n²/2 итераций."""
     # TODO: реализовать двойным циклом
-    raise NotImplementedError
+    count_pairs = 0
+    for i in range(len(a)):
+        for j in range(i+1, len(a)):
+            if a[i] == a[j]:
+                count_pairs += 1
+    return count_pairs
 
 
 def binary_pow(x: int, n: int, mod: int | None = None) -> int:
-    """Бинарное возведение в степень, n >= 0. Ожидаемая сложность: TODO.
+    """Бинарное возведение в степень, n >= 0. Ожидаемая сложность: log2 n.
 
     При заданном mod все умножения выполняются по модулю (результат x**n % mod).
     """
     # TODO: реализовать через квадрирование; при mod применять % mod после
     # каждого умножения
-    raise NotImplementedError
+    result = 1
+    while n != 0:
+        if n % 2 == 1:
+            result = (result * x) % mod if mod is not None else result * x
+        x = (x * x) % mod if mod is not None else x * x
+        n = n // 2
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -159,12 +170,16 @@ def self_check() -> None:
     # Граничные случаи
     assert array_sum([]) == 0
     assert array_sum([7]) == 7
+    assert array_sum([-5, -2, -3]) == -10
     assert array_max([3, 1, 2]) == 3
+    assert array_max([7,7,7,7]) == 7
     assert count_equal_pairs([]) == 0
     assert count_equal_pairs([5, 5, 5]) == 3          # пары (0,1), (0,2), (1,2)
+    assert count_equal_pairs([3, 8, 7, 6]) == 0
     assert binary_pow(2, 0) == 1
     assert binary_pow(2, 10) == 1024
     assert binary_pow(2, 10, mod=1000) == 24
+    assert binary_pow(0,0) == 1
 
     # Сверка с эталонными реализациями на случайных данных
     rng = random.Random(0)
